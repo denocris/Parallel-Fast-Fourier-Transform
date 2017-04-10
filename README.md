@@ -1,3 +1,3 @@
-# P2.8 Fast Furier Transform
+# P2.8 Fast Fourier Transforms
 
 Teachers: Ralph Gebauer, Ivan Girotto
