@@ -4,11 +4,6 @@
  * Created by G.P. Brandino, I. Girotto, R. Gebauer
  * Last revision: March 2016
  *
- * Assignment 
- *
- * Adapt this routine to handle distributed arrays for data and derivative
- * Remind a new fft_mpi_handler is defined in utilities.h, change fft_3d accordingly
- *
  */
 
 #include <complex.h>
@@ -19,7 +14,7 @@
 /*
  * Calculate the derivative in direction ipol of the array 'data'
  */
-void derivative( fftw_mpi_handler* fft, int n1, int n2, int n3, double L1, double L2, double L3, int ipol, double* data, double* deriv ){
+void derivative( fftw_handler* fft, int n1, int n2, int n3, double L1, double L2, double L3, int ipol, double* data, double* deriv ){
 
     fftw_complex *aux;
     double G;

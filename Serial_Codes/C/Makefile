@@ -1,4 +1,4 @@
-CC=mpicc
+CC=gcc
 CFLAGS = -O3 -Wall -I$(FFTW_INC)
 LIBS = -L$(FFTW_LIB) -lfftw3 -lm
 EXE = diffusion.x
@@ -16,7 +16,7 @@ $(EXE): $(OBJ)
 	$(CC) $(CFLAGS) -c $<
 
 flush:
-	rm -f *.dat
+	rm -f *.dat *.png *.gif
 
 clean: 
 	rm -f *.o *.x *~

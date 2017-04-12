@@ -1,8 +1,8 @@
 /*
- * Assignment 
- * 
- * Adapt these routines to handle distributed arrays 
- * 
+ * This file contains functions to output data.  
+ * plot_data1_1d outputs a 1D slices in the direction "dir" and in the middle of extesion of the other two directions 
+ * plot_data_2d output a 2D slice in the direction perpendicular to "dir" and at a half the height of "dir".
+ *
  * Created by G.P. Brandino, I. Girotto, R. Gebauer
  * Last revision: March 2016
  */
@@ -33,12 +33,6 @@ void plot_data_1d( char* name, int n1, int n2, int n3, int dir, double* data)
           snprintf(buf, sizeof(buf), "%s_%d.dat", name, num);
           }
     fp = fopen (buf, "w");
-
- /*
-  * HINT: Assuming you sliced your system along i3, iif idir.eq.1 or idir.eq.2 you 
-  *       need to understand which process holds the line you are inrested in. If idir.eq.3
-  *       you need to take the correct slice of the line from each process
-  */
 
     if ( dir == 1)
         {
@@ -91,11 +85,7 @@ void plot_data_2d( char* name, int n1, int n2, int n3, int dir, double* data)
           snprintf(buf, sizeof(buf), "%s_%d.dat", name, num);
           }
     fp = fopen (buf, "w");
-  /*
-   * HINT: Assuming you sliced your system along i3, iif idir==1 or idir==2 you 
-   *       need to take the correct slice of the plane from each process. If idir==3, you need  
-   *       to understand which process holds the plane you are inrested in. 
-   */
+
     if ( dir == 1)
         {
         i1=n1/2-1;

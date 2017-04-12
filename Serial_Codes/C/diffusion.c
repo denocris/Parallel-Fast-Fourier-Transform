@@ -1,14 +1,8 @@
-/* Assignment: 
- * Parallelize the code, using fftw-mpi
- * This amount to 
- *   - distribute the data contained in diffusivity, conc, dconc, aux1, aux2 in the way fftw-mpi expects
- *   - modify the fftw calls in fftw-mpi in p_fftw_wrapper
- * You will need to modify the files
- *   - diffusion.c   
- *   - derivative.c
- *   - fftw_wrapper.c
- * In these files you will find some HINTs, make good use of them :)
- *
+/* 
+ * This code calcutes the solution of the diffusion equaution in 3D, using time forward 
+ * discretization for the time derivative, and using discrete fourier transform to calculate
+ * spatial derivatives. 
+ * 
  * Created by G.P. Brandino, I. Girotto, R. Gebauer
  * Last revision: March 2016
  */
@@ -20,8 +14,6 @@
 #include <complex.h>
 #include <fftw3.h>
 #include "utilities.h"
-// HINT: include mpi and fftw3-mpi 
-//       http://www.fftw.org/doc/MPI-Files-and-Data-Types.html#MPI-Files-and-Data-Types
 
 #define MAX(x, y) (((x) > (y)) ? (x) : (y))
 
@@ -47,44 +39,20 @@ int main(){
   
     double f1conc, f2conc, f3conc, f1diff, f2diff, f3diff, fac, ss;
     double x1, x2 , x3, rr, r2mean;
-    fftw_mpi_handler fft_h;
+    fftw_handler fft_h;
 
-    /* 
-     * Initializzation of the MPI environment 
-     *
-     */
-
-    /*
-     * initialize the fftw system and local dimension
-     * as the value returned from the parallel FFT grid initializzation 
-     *
-     */
-    init_fftw( &fft_h, n1, n2, n3, MPI_COMM_WORLD);
-
-  
-    /*
-     * Allocate distribute memory arrays
-     * HINT: the arrays need to be distributed, so you have to set the correct sizes 
-     *       Use fftw_mpi_local_size_3d to calculate sizes
-     *       http://www.fftw.org/doc/MPI-Data-Distribution-Functions.html
-     *
-     * More hints are reported into the fft_wrapper.c file where the fft_init_mpi is defined
-     *
-     */
     diffusivity = (double*)malloc(n1*n2*n3*sizeof(double));
     conc = (double*)malloc(n1*n2*n3*sizeof(double));
     dconc = (double*)malloc(n1*n2*n3*sizeof(double));
     aux1 = (double*)malloc(n1*n2*n3*sizeof(double));
     aux2 = (double*)malloc(n1*n2*n3*sizeof(double));
 
-
-    /* 
-     * Define the diffusivity inside the system and 
-     * the starting concentration
-     *
-     * ss is to integrate (and normalize) the concentration
-     *
-     */   
+ // 
+ // Define the diffusivity inside the system and 
+ // the starting concentration
+ //
+ // ss is to integrate (and normalize) the concentration
+ // 
 
     ss = 0.0;
 
@@ -117,35 +85,26 @@ int main(){
 	  }
       }
     
-    /*
-     * HINT: The parallel version of  the output routines is provided in the mpi_output_routines folder
-     *
-     */
     plot_data_2d("diffusivity", n1, n2, n3, 1, diffusivity);
     plot_data_2d("diffusivity", n1, n2, n3, 2, diffusivity);
     plot_data_2d("diffusivity", n1, n2, n3, 3, diffusivity);
     
     
     fac= L1*L2*L3/(n1*n2*n3);
-  
-    /*
-     * Now normalize the concentration
-     *
-     * HINT:the global ss must be computed and propagated to all processes 
-     *      ss = 1.0/(ss*fac);
-     *
-     */
+  // Now normalize the concentration
     ss = 1.0/(ss*fac);
     for (i1=0; i1< n1*n2*n3; ++i1)
       conc[i1]*=ss;
       
-    /*
-     * Now everything is defined: system size, diffusivity inside the system, and
-     * the starting concentration
-     *
-     * Start the dynamics
-     *
-     */
+   // initialize the fftw system 
+    init_fftw(&fft_h, n1, n2, n3);
+   
+  // Now everything is defined: system size, diffusivity inside the system, and
+  // the starting concentration
+  //
+  // Start the dynamics
+  //
+ 
     start = seconds();
     for (istep = 1; istep <= nstep; ++istep)
       {
@@ -171,7 +130,6 @@ int main(){
             // Check the normalization of conc
             ss = 0.;
             r2mean = 0.;
-            // HINT: the conc array is distributed, so only a part of it is on each processor
             for (i3 = 0; i3 < n3; ++i3)
 	      {
                 x3=L3*((double)i3)/n3 - 0.5*L3;
@@ -188,16 +146,11 @@ int main(){
 		      }   
 		  }
 	      }
-
-            /*
-	     * HINT: global values of ss and r2mean must be globally computed and distributed to all processes
-	     *
-	     */
             ss *= fac;
             r2mean *= fac;
             end = seconds();
-            printf(" %d %17.15f %17.15f Elapsed time per iteration %f \n ", istep, r2mean, ss, (end-start)/istep);
-            // HINT: Use parallel version of output routines
+            printf(" %d %17.15f %17.15f Elapsed time per iteration %f \n", istep, r2mean, ss, (end-start)/istep);
+
             plot_data_2d("concentration", n1, n2, n3, 2, conc);
             plot_data_1d("1d_conc", n1, n2, n3, 3, conc);
 	  }
@@ -210,10 +163,6 @@ int main(){
     free(dconc);
     free(aux1);
     free(aux2);
-
-    /*
-     * Finalize the MPI environment
-     */
 
     return 0;
 } 
