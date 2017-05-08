@@ -3,7 +3,7 @@ CC=mpicc
 #FFTW_INC =/opt/local/include
 #FFTW_LIB =/opt/local/lib
 FFTW_INC =/u/shared/programs/x86_64/fftw/3.3.4/gnu/4.9.2/include
-FFTW_LIB =/u/shared/programs/x86_64/fftw/3.3.4/gnu/4.9.2/include
+FFTW_LIB =/u/shared/programs/x86_64/fftw/3.3.4/gnu/4.9.2/lib
 
 CFLAGS = -O3 -Wall -I$(FFTW_INC)
 
