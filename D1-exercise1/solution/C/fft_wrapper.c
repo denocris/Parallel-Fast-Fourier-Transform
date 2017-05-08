@@ -1,15 +1,15 @@
 /* Assignement:
  * Here you have to modify the includes, the array sizes and the fftw calls, to use the fftw-mpi
  *
- * Regarding the fftw calls. here is the substitution 
+ * Regarding the fftw calls. here is the substitution
  * fftw_plan_dft_3d -> fftw_mpi_plan_dft_3d
- * ftw_execute_dft  > fftw_mpi_execute_dft 
+ * ftw_execute_dft  > fftw_mpi_execute_dft
  * use fftw_mpi_local_size_3d for local size of the arrays
- * 
+ *
  * Created by G.P. Brandino, I. Girotto, R. Gebauer
  * Last revision: March 2016
  *
- */ 
+ */
 
 #include <stdbool.h>
 #include <string.h>
@@ -25,7 +25,7 @@ double seconds(){
   return sec;
 }
 
-/* 
+/*
  *  Index linearization is computed following row-major order.
  *  For more informtion see FFTW documentation:
  *  http://www.fftw.org/doc/Row_002dmajor-Format.html#Row_002dmajor-Format
@@ -33,11 +33,11 @@ double seconds(){
  */
 int index_f ( int i1, int i2, int i3, int n1, int n2, int n3){
 
-  return n3*n2*i1 + n3*i2 + i3; 
+  return n3*n2*i1 + n3*i2 + i3;
 }
 
 void init_fftw(fftw_mpi_handler *fft, int n1, int n2, int n3, MPI_Comm comm){
-  
+
   /*
    * Call to fftw_mpi_init is needed to initialize a parallel enviroment for the fftw_mpi
    */
@@ -75,9 +75,9 @@ void close_fftw( fftw_mpi_handler *fft ){
 
 /* This subroutine uses fftw to calculate 3-dimensional discrete FFTs.
  * The data in direct space is assumed to be real-valued
- * The data in reciprocal space is complex. 
+ * The data in reciprocal space is complex.
  * direct_to_reciprocal indicates in which direction the FFT is to be calculated
- * 
+ *
  * Note that for real data in direct space (like here), we have
  * F(N-j) = conj(F(j)) where F is the array in reciprocal space.
  * Here, we do not make use of this property.
@@ -86,42 +86,41 @@ void close_fftw( fftw_mpi_handler *fft ){
  *
  * f: array in direct space
  * F: array in reciprocal space
- * 
+ *
  * F(k) = \sum_{l=0}^{N-1} exp(- 2 \pi I k*l/N) f(l)
  * f(l) = 1/N \sum_{k=0}^{N-1} exp(+ 2 \pi I k*l/N) F(k)
- * 
+ *
  */
 
 void fft_3d( fftw_mpi_handler* fft, double *data_direct, fftw_complex* data_rec, bool direct_to_reciprocal ){
 
     double fac;
     int i;
-    
+
     // Now distinguish in which direction the FFT is performed
     if( direct_to_reciprocal ){
-     
+
       for(i = 0; i < fft->local_size_grid; i++){
 
       	  fft->fftw_data[i]  = data_direct[i] + 0.0 * I;
       	}
-      
+
       fftw_mpi_execute_dft( fft->fw_plan, fft->fftw_data, fft->fftw_data );
-            
+
       memcpy( data_rec, fft->fftw_data, fft->local_size_grid * sizeof(fftw_complex) );
 
     }
     else{
-     
+
       memcpy(fft->fftw_data, data_rec, fft->local_size_grid * sizeof(fftw_complex) );
-      
+
       fftw_mpi_execute_dft(fft->bw_plan, fft->fftw_data, fft->fftw_data);
-     
+
       fac = 1.0 / fft->global_size_grid;
-      
+
       for( i = 0; i < fft->local_size_grid; ++i ){
-	
+
 	data_direct[i] = creal( fft->fftw_data[i] ) * fac;
       }
     }
 }
-

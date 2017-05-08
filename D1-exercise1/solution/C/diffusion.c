@@ -25,12 +25,15 @@
 
 int main( int argc, char* argv[] ){
 
+    //int dim = atoi(1);
+
     // Dimensions of the system
     double L1 = 10., L2 = 10., L3 = 20.;
     // Grid size
-    int n1 = 48, n2 = 48, n3 = 48;
+    //int n1 = 48, n2 = 48, n3 = 48;
+    int n1 = atoi(argv[1]), n2 = atoi(argv[1]), n3 = atoi(argv[1]);
     // time step for time integration
-    double dt = 2.e-3;
+    double dt = 2.e-5;
     // number of time steps
     int nstep = 100;
     // Radius of diffusion channel

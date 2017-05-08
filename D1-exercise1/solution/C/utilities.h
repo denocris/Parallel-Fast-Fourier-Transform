@@ -1,4 +1,4 @@
-/* 
+/*
  * Created by G.P. Brandino, I. Girotto, R. Gebauer
  * Last revision: March 2016
  */
@@ -15,15 +15,15 @@
 
 typedef struct {
 
-  fftw_plan fw_plan; 
+  fftw_plan fw_plan;
   fftw_plan bw_plan;
   fftw_complex *fftw_data;
   ptrdiff_t global_size_grid;
   ptrdiff_t local_size_grid;
   ptrdiff_t local_n1;
   ptrdiff_t local_n1_offset;
-  MPI_Comm mpi_comm;  
-  
+  MPI_Comm mpi_comm;
+
 } fftw_mpi_handler;
 
 
