@@ -28,7 +28,7 @@ int main( int argc, char* argv[] ){
     //int dim = atoi(1);
 
     // Dimensions of the system
-    double L1 = 10., L2 = 10., L3 = 20.;
+    double L1 = 10., L2 = 10., L3 = 10.;
     // Grid size
     //int n1 = 48, n2 = 48, n3 = 48;
     int n1 = atoi(argv[1]), n2 = atoi(argv[1]), n3 = atoi(argv[1]);
@@ -132,9 +132,12 @@ int main( int argc, char* argv[] ){
      * HINT: Parallellize the output routines
      *
      */
+
+     /*
     plot_data_2d( "diffusivity", n1, n2, n3,  n1_local, n1_local_offset, 1, diffusivity );
     plot_data_2d( "diffusivity", n1, n2, n3,  n1_local, n1_local_offset, 2, diffusivity );
     plot_data_2d( "diffusivity", n1, n2, n3,  n1_local, n1_local_offset, 3, diffusivity );
+    */
 
     fac = L1 * L2 * L3 / ( global_size_grid );
 
@@ -214,8 +217,11 @@ int main( int argc, char* argv[] ){
             if( mype == 0 ) printf(" %d %17.15f %17.15f Elapsed time per iteration %f \n", istep, global_r2mean, global_ss, ( end - start ) / istep );
 
             // HINT: Use parallel version of output routines
+
+            /*
             plot_data_2d("concentration", n1, n2, n3, n1_local, n1_local_offset, 2, conc);
 	    plot_data_1d("1d_conc", n1, n2, n3, n1_local, n1_local_offset,3, conc);
+      */
 	}
 
     }
