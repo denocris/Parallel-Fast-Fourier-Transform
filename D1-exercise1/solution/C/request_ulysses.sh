@@ -1,5 +1,5 @@
 #!/bin/bash
-#PBS -l nodes=16:ppn=20 -q wide -l walltime=08:00:00
+#PBS -l nodes=16:ppn=20 -q wide -l walltime=00:05:00
 
 module load openmpi
 module load fftw/3.3.4
