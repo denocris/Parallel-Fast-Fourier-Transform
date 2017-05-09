@@ -12,7 +12,7 @@ dimension="64"
 
 for size in $dimension; do
   for node in $num_nodes; do
-    nproc=$(($node * 16))
-    mpirun -np $nproc --map-by ppr:16:node:pe=1 ./diffusion.x $size >> strong_$size.txt
+    nproc=$(($node * 8))
+    mpirun -np $nproc --map-by ppr:8:node:pe=1 ./diffusion.x $size >> strong_$size.txt
   done
 done
