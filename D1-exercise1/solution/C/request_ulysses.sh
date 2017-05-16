@@ -11,13 +11,13 @@ cd /home/cdenobi/P2.8_seed/D1-exercise1/solution/C
 make
 
 num_nodes="1 2 4 8 16"
-dimension="128"
+sizes="128"
 
 
 outfile="log_strong$size.txt"
 
 
-for size in $dimension; do
+for size in $sizes; do
   for node in $num_nodes; do
     nproc=$(($node * 8))
     echo "------------- NUMBER OF PROCESSOR = $nproc -----------------" >> $outfile
