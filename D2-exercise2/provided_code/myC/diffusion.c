@@ -32,9 +32,9 @@ int main( int argc, char* argv[] ){
     int n1 = atoi(argv[1]), n2 = atoi(argv[1]), n3 = atoi(argv[1]);
     /* int n1 = 1440, n2 = 1440, n3 = 100; */
     // time step for time integration
-    double dt = 2.e-8;
+    double dt = 2.e-5;
     // number of time steps
-    int nstep = 2; //101;
+    int nstep = 3; //101;
     // Radius of diffusion channel
     double rad_diff = 0.7;
     // Radius of starting concentration
