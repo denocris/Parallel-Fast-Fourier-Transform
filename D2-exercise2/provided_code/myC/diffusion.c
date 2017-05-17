@@ -52,7 +52,7 @@ int main( int argc, char* argv[] ){
     fftw_dist_handler fft_h;
     int mype, npes;
     int n1_local, n1_local_offset, local_size_grid, global_size_grid;
-    FILE* fp;
+    //FILE* fp;
 
     /*
      * Initializzation of the MPI environment
