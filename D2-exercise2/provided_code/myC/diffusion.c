@@ -32,7 +32,7 @@ int main( int argc, char* argv[] ){
     int n1 = atoi(argv[1]), n2 = atoi(argv[1]), n3 = atoi(argv[1]);
     /* int n1 = 1440, n2 = 1440, n3 = 100; */
     // time step for time integration
-    double dt = 2.e-5;
+    double dt = 2.e-8;
     // number of time steps
     int nstep = 2; //101;
     // Radius of diffusion channel
@@ -225,12 +225,6 @@ int main( int argc, char* argv[] ){
 
     }
 
-    if( mype == 0 ){
-      end = seconds();
-      fp = fopen("/home/pdicerbo/pdicerbo-P2.7/Results/timing_2D_small.dat", "a");
-      fprintf(fp, "%d\t%lg\n", npes, (end - start));
-      fclose(fp);
-    }
 
     close_fftw(&fft_h);
     free(diffusivity);
