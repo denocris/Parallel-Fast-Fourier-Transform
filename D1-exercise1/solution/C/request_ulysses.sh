@@ -5,11 +5,11 @@
 module load openmpi
 module load fftw/3.3.4
 
-cd /home/cdenobi/P2.8_seed/D2-exercise2/provided_code/myC
+cd /home/cdenobi/P2.8_seed/D1-exercise1/solution/C
 #cd $PBS_O_WORKDIR
 
 make
-# do
+
 num_nodes="1 2 4 8 16"
 sizes="128 512"
 
