@@ -34,7 +34,7 @@ int main( int argc, char* argv[] ){
     // time step for time integration
     double dt = 2.e-5;
     // number of time steps
-    int nstep = 3; //101;
+    int nstep = 2; //101;
     // Radius of diffusion channel
     double rad_diff = 0.7;
     // Radius of starting concentration
@@ -52,7 +52,6 @@ int main( int argc, char* argv[] ){
     fftw_dist_handler fft_h;
     int mype, npes;
     int n1_local, n1_local_offset, local_size_grid, global_size_grid;
-    //FILE* fp;
 
     /*
      * Initializzation of the MPI environment

@@ -2,8 +2,8 @@
 #PBS -l nodes=16:ppn=20 -q wide -l walltime=00:30:00
 #PBS -N fft
 
-module load openmpi
-module load fftw/3.3.4
+module load openmpi/1.8.3/gnu/4.9.2
+module load fftw/3.3.4/gnu/4.9.2
 
 cd /home/cdenobi/P2.8_seed/D2-exercise2/provided_code/myC
 #cd $PBS_O_WORKDIR
