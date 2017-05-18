@@ -34,7 +34,7 @@ int main( int argc, char* argv[] ){
     // time step for time integration
     double dt = 2.e-5;
     // number of time steps
-    int nstep = 2; //101;
+    int nstep = 3; //101;
     // Radius of diffusion channel
     double rad_diff = 0.7;
     // Radius of starting concentration
@@ -176,7 +176,7 @@ int main( int argc, char* argv[] ){
 
         for( ii = 0; ii < local_size_grid; ++ii ) conc[ii] += dt * dconc[ii];
 
-        if( istep % 30 == 1 ){
+        if( istep % 2 == 1 ){
 
             // Check the normalization of conc
             ss = 0.;
