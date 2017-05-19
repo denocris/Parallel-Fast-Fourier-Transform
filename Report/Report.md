@@ -13,6 +13,6 @@ the label "fftw" refers to data obtained with the fftw library (In folder D1-exe
 ![GitHub Logo](timing_size512.png)
 
 
-![GitHub Logo](speedup_size512.png)
+![GitHub Logo](Speedup_size512.png)
 
 Looking at the results it seems that my implementation is a bit faster than the library. I think that is valid just for this particular problem and and relatively small size ($512^3$). Unfortunately I didn't have time to perform a more detailed analysis.
