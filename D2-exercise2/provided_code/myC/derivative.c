@@ -27,7 +27,7 @@ void derivative( fftw_dist_handler* fft, int n1, int n2, int n3, double L1, doub
     aux = ( fftw_complex* ) fftw_malloc( fft->local_size_grid * sizeof(fftw_complex) );
 
     // First get the FFT of data
-    fft_3d( fft, data, aux, true );
+    my_fft_3d( fft, data, aux, true );
 
     if( ipol == 1 ){
 
@@ -84,6 +84,6 @@ void derivative( fftw_dist_handler* fft, int n1, int n2, int n3, double L1, doub
     }
 
     // Now go back to real space
-    fft_3d( fft, deriv, aux, false);
+    my_fft_3d( fft, deriv, aux, false);
     fftw_free(aux);
 }

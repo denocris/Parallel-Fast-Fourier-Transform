@@ -56,7 +56,6 @@ void init_fftw( fftw_dist_handler* fft, int n1, int n2, int n3, MPI_Comm comm );
 void close_fftw( fftw_dist_handler* fft );
 
 void derivative( fftw_dist_handler* fft,int n1, int n2, int n3, double L1, double L2, double L3, int ipol, double* data, double* deriv );
-void fft_3d( fftw_dist_handler* fft, double *data_direct, fftw_complex* data_rec, bool direct_to_reciprocal );
-void old_fft_3d( fftw_dist_handler* fft, double *data_direct, fftw_complex* data_rec, bool direct_to_reciprocal );
+void my_fft_3d( fftw_dist_handler* fft, double *data_direct, fftw_complex* data_rec, bool direct_to_reciprocal );
 
 #endif

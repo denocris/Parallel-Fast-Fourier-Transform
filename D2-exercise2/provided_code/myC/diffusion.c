@@ -52,6 +52,7 @@ int main( int argc, char* argv[] ){
     fftw_dist_handler fft_h;
     int mype, npes;
     int n1_local, n1_local_offset, local_size_grid, global_size_grid;
+    FILE* fp;
 
     /*
      * Initializzation of the MPI environment
@@ -222,6 +223,16 @@ int main( int argc, char* argv[] ){
 
 	}
 
+    }
+
+    if( mype == 0 ){
+      end = seconds();
+      // On my Mac
+      fp = fopen("/Users/Yak52/Github/P2.8_seed/D2-exercise2/provided_code/myC/timing.txt", "a");
+      // On Ulysses
+      //fp = fopen("/home/cdenobi/P2.8_seed/D2-exercise2/provided_code/myC/timing.txt", "a");
+      fprintf(fp, "%d\t%lg\n", npes, (end - start));
+      fclose(fp);
     }
 
 
