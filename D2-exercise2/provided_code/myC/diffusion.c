@@ -228,9 +228,9 @@ int main( int argc, char* argv[] ){
     if( mype == 0 ){
       end = seconds();
       // On my Mac
-      fp = fopen("/Users/Yak52/Github/P2.8_seed/D2-exercise2/provided_code/myC/timing.txt", "a");
+      //fp = fopen("/Users/Yak52/Github/P2.8_seed/D2-exercise2/provided_code/myC/timing.txt", "a");
       // On Ulysses
-      //fp = fopen("/home/cdenobi/P2.8_seed/D2-exercise2/provided_code/myC/timing.txt", "a");
+      fp = fopen("/home/cdenobi/P2.8_seed/D2-exercise2/provided_code/myC/timing.txt", "a");
       fprintf(fp, "%d\t%lg\n", npes, (end - start));
       fclose(fp);
     }
